@@ -1,0 +1,187 @@
+{% load static %}
+{%load omfilters%}
+<header>
+    <div class="topbar">
+     <div class="container-xxl">
+       <div class="row">
+         <div class="col-md-5">
+           <div class="top-left">
+             <span class="badge bg-info text-dark">Novo</span>
+             <a href="">Promoções imperdíveis! Clique aqui</a>
+           </div>
+         </div>
+         <div class="col-md-7 ">
+           <div class="top-right">
+             <ul class="rightElement">
+               <li>
+                 <a href="">
+                   <i class="bi bi-geo-alt-fill"> Locais de venda</i>
+                 </a>
+               </li>
+ 
+               <li>
+                 <a href="">
+                   <i class="bi bi-file-text"> Rastreie aqui</i>
+                 </a>
+               </li>
+               
+             </ul> 
+ 
+             <div class="myAccount-nav">
+               <span><a href=""><i class="bi bi-gear"> Sua conta</i><i class="bi bi-caret-down mx-1"></i></a></span>
+               <ul class="myAccount-dropdown">
+                {% if request.user.is_authenticated %}
+                 <li>
+                   <a href="{% url 'pedido:lista'%}">Pedidos</a>
+                 </li>
+ 
+                 <li>
+                   <a href="{% url 'perfil:criar'%}">Atualizar</a>
+                 </li>
+ 
+                 <li>
+                   <a href="{% url 'perfil:logout'%}">Sair</a>
+                 </li>
+                 {% else %}
+                 <li>
+                  <a href="{% url 'perfil:criar'%}">Cadastre-se</a>
+                </li>
+                {%endif%}
+
+               </ul>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+    </div>
+ 
+    <div class="header-middle">
+     <div class="container-xxl">
+       <div class="row">
+         <div class="col-md-3 col-lg-3 position-relative">
+           <div class="logo">
+           Poti<span>Eco</span>
+           </div>
+ 
+           <div id="poti"><i class="bi bi-text-paragraph"><p id="dica">menu</p></i></div>
+         </div>
+ 
+         <div class="col-md-12 col-lg-5 search-order">
+           <div class="header-search">
+             <form method="GET" action="{% url 'produto:busca'%}">
+                 <div class="input-group mb-3">
+                   <input name="termo" value="{{request.GET.termo}}" type="search" class="form-control" placeholder="Pesquise produtos aqui">
+                   <div class="input-group-append">
+                     <button class="btn btn-secondary btn-bg" type="submit">
+                       <i class="bi bi-search"></i>
+                     </button>
+                   </div>
+               </div>
+             </form>
+           </div>
+         </div>
+ 
+         <div class="col-md-9 col-lg-4">
+           <div class="middle-header-right">
+ 
+             <div class="sign-register">
+               <i class="bi bi-person"></i>
+               {% if request.user.is_authenticated %}
+               <p><a href="{% url 'perfil:criar'%}">Bem vindo,</a><br><a href="{% url 'perfil:criar'%}"> <span class="">{{user}}</span></a></p>
+               
+               {%else%}
+               <p><a href="{% url 'perfil:criar'%}">Cadastre-se</a><br> ou <a href="{% url 'perfil:criar'%}">Entre</a></p>
+               
+               {%endif%}
+               
+             </div>
+ 
+             <div class="wishlist-widget">
+               <a href="">
+                 <i class="bi bi-heart"></i>
+               </a>
+             </div>
+ 
+             <div class="my-cart-widget">
+               <button class="btn position-relative">
+                 <a href="{% url 'produto:carrinho'%}"><i class="bi bi-bag"></i></a>
+                 {% if request.session.carrinho %}
+                 <span class="position-absolute translate-middle badge rounded-pill bg-success mt-4 ms-0">{{request.session.carrinho | cart_total_qtd}}</span>
+                 {%else%}
+                 <span class="position-absolute translate-middle badge rounded-pill bg-success mt-4 ms-0" style="font-size: 10px;">vazio</span>
+                 {% endif %}
+               </button>
+               <span>Carrinho</span>
+               
+               <div class="my-cart-list">
+                 <ul>
+                   <li>
+                     <a href="{% url 'produto:carrinho'%}">
+                       <h6>Clique para ver o carrinho:</h6>
+                       {% if request.session.carrinho %}
+                       <div class="cart-prod-rate">{{request.session.carrinho | cart_total_qtd}} itens adicionados</div>
+                       {% endif %}
+                     </a>
+                   </li>
+ 
+                   
+                 </ul>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+    </div>
+ 
+    <nav>
+     <div class="container-xxl">
+       <div class="nav-collapse">
+         <div id="closeBtn">X</div>
+         <ul class="custom-nav">
+           <li class="cst-nav-item">
+             <a href="{% url 'produto:lista'%}" class="cst-nav-link">Página inicial</a>
+           </li>
+           <li class="cst-nav-item cst-dropdown">
+             <a href="" class="cst-nav-link">Nossos produtos<i class="bi bi-chevron-down"></i></a>
+             <ul class="cst-dropdown-menu">
+               <li>
+                 <a href="" class="cst-dropdown-link">Cereais, pães e tubérculos</a>
+               </li>
+ 
+               <li>
+                 <a href="" class="cst-dropdown-link">Hortaliças</a>
+               </li>
+ 
+               <li>
+                 <a href="" class="cst-dropdown-link">Carnes</a>
+               </li>
+ 
+               <li>
+                 <a href="" class="cst-dropdown-link">Frutas</a>
+               </li>
+ 
+               <li>
+                 <a href="" class="cst-dropdown-link">Produtos derivados</a>
+               </li>
+             </ul>
+           </li>
+           <li class="cst-nav-item">
+             <a href="" class="cst-nav-link">Ofertas</a>
+           </li>
+           <li class="cst-nav-item">
+             <a href="" class="cst-nav-link">Sobre nós</a>
+           </li>
+           <li class="cst-nav-item">
+             <a href="" class="cst-nav-link">Contato</a>
+           </li>
+ 
+   
+         </ul>
+        
+       </div>
+     </div>
+    </nav>
+ 
+   </header>
